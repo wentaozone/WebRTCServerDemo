@@ -1,30 +1,32 @@
-const ClientModel = require("./ClientModel");
+function ClientModel(group, id, type) {
+  this.group = group;
+  this.id = id;
+  this.type = type;
+}
 
 module.exports = function(io) {
 
   var mSockets = [];
   var groups = new Map();
+  var idMap = new Map();
+
 
   let clientType_Taurus = 'taurus';
   let clientType_Virgo = 'virgo';
 
   io.on('connection', function(client) {
-    let clientId = client.id;
+    let socketId = client.id;
 
-    console.log('-- ' + clientId + ' joined --');
+    console.log('-- socketId: ' + socketId + ' joined --');
     mSockets.push(client);
-    client.emit('id', clientId);
+    client.emit('id', socketId);
 
-
-
-
+    client.on('init', function (data) {
+      handleInit(data);
+  });
 
     client.on('search', function (data) {
         handleSearch(data);
-    });
-
-    client.on('init', function (data) {
-        handleInit(data);
     });
 
     client.on('message', function (data) {
@@ -34,9 +36,11 @@ module.exports = function(io) {
     function handleInit(data){
         let groupName = data.group;
         let clientType = data.clientType;
-        if (clientType !== clientType_Taurus || clientType !== clientType_Virgo) {
+        let clientId = data.clientId;
+        if (clientType !== clientType_Taurus && clientType !== clientType_Virgo) {
             return;
         }
+        idMap.set(socketId, clientId);
         
         var group = groups.get(groupName);
         var taurusMap;
@@ -48,9 +52,14 @@ module.exports = function(io) {
             group.set(clientType_Taurus, taurusMap);
             group.set(clientType_Virgo, virgoMap);
             groups.set(groupName, group);
+        }else{
+          group = groups.get(groupName);
+          taurusMap = group.get(clientType_Taurus);
+          virgoMap = group.get(clientType_Virgo);
         }
         
         let clientModel = new ClientModel(groupName, clientId, clientType);
+        // let clientModel = {'group':groupName, 'id': clientId, 'type': clientType};
         if (clientType == clientType_Taurus) {
             taurusMap.set(clientId, clientModel);
         }
@@ -59,18 +68,18 @@ module.exports = function(io) {
         }
 
 
-        console.log('-- clientId: ' + client.id + ' init');
-        for (var i = 0; i < mSockets.length; i++) {
-          var otherClient = mSockets[i];
-          if (client.id != otherClient.id) {
-            otherClient.emit('message',  {
-                type: "init",
-                from: client.id,
-                clientType: clientType,
-                group: group
-            });
-          }
-        }
+        console.log('-- clientId: ' + clientId + ' init ' + 'socketid: '+ socketId);
+        // for (var i = 0; i < mSockets.length; i++) {
+        //   var otherClient = mSockets[i];
+        //   if (client.id != otherClient.id) {
+        //     otherClient.emit('message',  {
+        //         type: "init",
+        //         from: client.id,
+        //         clientType: clientType,
+        //         group: group
+        //     });
+        //   }
+        // }
     }
 //  private tool method
     function getOtherClients(groupName, clientType){
@@ -84,10 +93,21 @@ module.exports = function(io) {
       }
       return otherClientMap;
     }
+    function getSelfClients(groupName, clientType) {
+      let group = groups.get(groupName);
+      var selfClientMap;
+      if (clientType == clientType_Taurus) {
+        selfClientMap = group.get(clientType_Virgo);
+      }
+      else if (clientType == clientType_Virgo) {
+        selfClientMap = group.get(clientType_Taurus);
+      }
+      return selfClientMap;
+    }
 // webSocket 处理函数
     function handleSearch(data){
       let groupName = data.group;
-      let clientId = data.from;
+      let clientId = data.clientId;
       let clientType = data.clientType;
       
       if (clientType !== clientType_Taurus) {
@@ -95,8 +115,18 @@ module.exports = function(io) {
       }
       // 有新加进来的Virgo也需要告知， 暂时不处理
       // 返回当前已经在线的Virgo列表
-      let others = getOtherClients(groupName, clientType);
-      client.emit('searchResult', others);
+      let otherMap = getOtherClients(groupName, clientType);
+      var clients = [];
+      for (const entry of otherMap) {
+          let client = entry[1];
+          clients.push(client);
+
+      }
+      let str = JSON.stringify(clients);
+      console.log('-- search for clientId: ' + clientId +'  virgos: '+str);
+      client.emit('searchResult', str);
+
+      
     }
 
     function handleSignalingMessage(details){
@@ -142,13 +172,28 @@ module.exports = function(io) {
     
 
     function leave() {
-      console.log('-- ' + client.id + ' left --');
+      let clientId = idMap.get(socketId);
+
+      console.log("-- socketId: " + socketId + " left --  clientId: " + clientId);
       var index = 0;
       while (index < mSockets.length && mSockets[index].id != client.id) {
-          index++;
+        index++;
       }
       mSockets.splice(index, 1);
 
+    
+      for (const entry of groups) {
+        let group = entry[1];
+        let taurusMap = group.get(clientType_Taurus);
+        let virgoMap = group.get(clientType_Virgo);
+        if (taurusMap.has(clientId)) {
+          taurusMap.delete(clientId);
+        }
+        if (virgoMap.has(clientId)) {
+          virgoMap.delete(clientId);
+        }
+      }
+      idMap.delete(socketId);
     }
 
     client.on('disconnect', leave);

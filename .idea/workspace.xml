@@ -20,9 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb3f1334-37c8-4dc0-9abf-eeebe169022f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/socketHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/socketHandler.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,11 +66,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="node" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.VCS" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -99,6 +99,8 @@
       <workItem from="1508297771302" duration="42881000" />
       <workItem from="1606456187474" duration="389000" />
       <workItem from="1606456589348" duration="485000" />
+      <workItem from="1606485362689" duration="123000" />
+      <workItem from="1606485887063" duration="361000" />
     </task>
     <servers />
   </component>
@@ -126,29 +128,31 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="WindowStateProjectService">
-    <state width="1379" height="190" key="GridCell.Tab.0.bottom" timestamp="1606457075066">
-      <screen x="0" y="23" width="1920" height="957" />
+    <state width="1379" height="246" key="GridCell.Tab.0.bottom" timestamp="1606485486796">
+      <screen x="0" y="25" width="1920" height="984" />
     </state>
     <state width="1379" height="190" key="GridCell.Tab.0.bottom/0.23.1920.957/-1280.23.1280.777@0.23.1920.957" timestamp="1606457075066" />
-    <state width="1379" height="190" key="GridCell.Tab.0.center" timestamp="1606457075065">
-      <screen x="0" y="23" width="1920" height="957" />
+    <state width="1379" height="246" key="GridCell.Tab.0.bottom/0.25.1920.984@0.25.1920.984" timestamp="1606485486796" />
+    <state width="1379" height="246" key="GridCell.Tab.0.center" timestamp="1606485486796">
+      <screen x="0" y="25" width="1920" height="984" />
     </state>
     <state width="1379" height="190" key="GridCell.Tab.0.center/0.23.1920.957/-1280.23.1280.777@0.23.1920.957" timestamp="1606457075065" />
-    <state width="1379" height="190" key="GridCell.Tab.0.left" timestamp="1606457075065">
-      <screen x="0" y="23" width="1920" height="957" />
+    <state width="1379" height="246" key="GridCell.Tab.0.center/0.25.1920.984@0.25.1920.984" timestamp="1606485486796" />
+    <state width="1379" height="246" key="GridCell.Tab.0.left" timestamp="1606485486795">
+      <screen x="0" y="25" width="1920" height="984" />
     </state>
     <state width="1379" height="190" key="GridCell.Tab.0.left/0.23.1920.957/-1280.23.1280.777@0.23.1920.957" timestamp="1606457075065" />
-    <state width="1379" height="190" key="GridCell.Tab.0.right" timestamp="1606457075065">
-      <screen x="0" y="23" width="1920" height="957" />
+    <state width="1379" height="246" key="GridCell.Tab.0.left/0.25.1920.984@0.25.1920.984" timestamp="1606485486795" />
+    <state width="1379" height="246" key="GridCell.Tab.0.right" timestamp="1606485486796">
+      <screen x="0" y="25" width="1920" height="984" />
     </state>
     <state width="1379" height="190" key="GridCell.Tab.0.right/0.23.1920.957/-1280.23.1280.777@0.23.1920.957" timestamp="1606457075065" />
-    <state x="284" y="155" key="SettingsEditor" timestamp="1606456751474">
-      <screen x="0" y="23" width="1920" height="957" />
+    <state width="1379" height="246" key="GridCell.Tab.0.right/0.25.1920.984@0.25.1920.984" timestamp="1606485486796" />
+    <state x="789" y="139" key="SettingsEditor" timestamp="1606486232976">
+      <screen x="0" y="25" width="1920" height="984" />
     </state>
     <state x="284" y="155" key="SettingsEditor/0.23.1920.957/-1280.23.1280.777@0.23.1920.957" timestamp="1606456751474" />
+    <state x="789" y="139" key="SettingsEditor/0.25.1920.984@0.25.1920.984" timestamp="1606486232976" />
   </component>
 </project>
