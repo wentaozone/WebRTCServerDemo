@@ -68,7 +68,7 @@ module.exports = function(io) {
         }
 
 
-        console.log('-- clientId: ' + clientId + ' init ' + 'socketid: '+ socketId);
+        console.log('-- socketid: ' + socketId + ' init ' + 'clientId: '+ clientId);
         // for (var i = 0; i < mSockets.length; i++) {
         //   var otherClient = mSockets[i];
         //   if (client.id != otherClient.id) {
