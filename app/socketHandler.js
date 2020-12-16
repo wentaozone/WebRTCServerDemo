@@ -143,7 +143,8 @@ module.exports = function(io) {
       for (const key of otherClientMap.keys()) {
         if (key !== clientId) {
           let other = otherClientMap.get(key);
-          sendMessageToOther(other.id, details);
+          let socketId = getByValue(idMap,other.id);
+          sendMessageToOther(socketId, details);
         }
       }
 
@@ -198,5 +199,17 @@ module.exports = function(io) {
 
     client.on('disconnect', leave);
     client.on('leave', leave);
+
+    function getByValue(map, searchValue) {
+      for (let [key, value] of map.entries()) {
+        if (value === searchValue)
+          return key;
+      }
+      return undefined;
+    }
+    // 未测试
+    function getkey(value, compare = (a, b) => a === b) {
+      return Object.keys(this.idMap).find(k => compare(this.idMap[k], value))
+    }
   });
 };
