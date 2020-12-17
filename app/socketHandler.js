@@ -194,6 +194,7 @@ module.exports = function(io) {
           virgoMap.delete(clientId);
         }
       }
+      console.log("mSockets size: "+ mSockets.length + ",   idMap size: " + idMap.size)
       idMap.delete(socketId);
     }
 
